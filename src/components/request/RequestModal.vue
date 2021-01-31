@@ -27,11 +27,6 @@
         <option value="pending">Выполняется</option>
       </select>
     </div>
-    
-    <div class="form-control">
-      <input type="radio">
-      <input type="checkbox">
-    </div>
 
     <button class="btn primary" :disabled="isSubmitting">Создать заявку</button>
   </form>

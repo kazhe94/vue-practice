@@ -47,7 +47,6 @@ export default {
                         id: key
                     }
                 })
-                console.log(rqs)
                 commit('setRequests', rqs)
             } catch (e) {
                 dispatch('setMessage', {

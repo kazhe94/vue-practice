@@ -1,5 +1,5 @@
 <template>
-  <form @click.prevent="onSubmit">
+  <form @submit.prevent="onSubmit">
     <div class="form-control" :class="{invalid: nError}">
       <label for="name">ФИО</label>
       <input type="text" id="name" v-model="name" @blur="nBlur">
@@ -21,11 +21,16 @@
     <div class="form-control">
       <label for="status">Статус</label>
       <select id="status" v-model="status">
-        <option value="done">Завершён</option>
-        <option value="cancelled">Отменён</option>
+        <option value="done">Завершен</option>
+        <option value="cancelled">Отменен</option>
         <option value="active">Активен</option>
         <option value="pending">Выполняется</option>
       </select>
+    </div>
+    
+    <div class="form-control">
+      <input type="radio">
+      <input type="checkbox">
     </div>
 
     <button class="btn primary" :disabled="isSubmitting">Создать заявку</button>

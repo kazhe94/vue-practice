@@ -32,7 +32,6 @@ export default {
                   value: error(e.response.data.error.message),
                   type: 'danger'
               }, {root: true})
-              console.log()
               throw new Error()
           }
       },

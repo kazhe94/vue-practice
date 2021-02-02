@@ -4,6 +4,8 @@
     <template #header>
       <button class="btn primary" @click="modal = true">Создать</button>
     </template>
+
+    <request-filter v-model="filter"></request-filter>
     <request-table :requests="requests"></request-table>
 
     <teleport to="body">
@@ -26,6 +28,7 @@ import AppModal from "../components/ui/AppModal";
 import RequestModal from "../components/request/RequestModal";
 import {useStore} from "vuex";
 import AppLoader from "../components/ui/AppLoader";
+import RequestFilter from "../components/request/RequestFilter";
 
 export default {
   name: 'Home',
@@ -34,12 +37,14 @@ export default {
     RequestTable,
     AppModal,
     RequestModal,
-    AppLoader
+    AppLoader,
+    RequestFilter
   },
   setup() {
     const modal = ref(false)
     const store = useStore()
     const loading = ref(false)
+    const filter = ref({})
 
     onMounted( async ()=> {
       loading.value = true
@@ -48,12 +53,24 @@ export default {
     })
 
     const requests = computed(()=> {
-      return store.getters['request/requests']
+      return store.getters['request/requests'].filter((r)=> {
+        if(filter.value.name) {
+         return r.name.includes(filter.value.name)
+        }
+        return r
+      })
+      .filter((r)=> {
+        if(filter.value.status) {
+          return r.status === filter.value.status
+        }
+        return r
+      })
     })
     return {
       modal,
       requests,
-      loading
+      loading,
+      filter
     }
   }
 }

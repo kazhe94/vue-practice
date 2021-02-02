@@ -54,6 +54,50 @@ export default {
                     type: 'danger'
                 }, {root: true})
             }
+        },
+        async loadOne({commit, dispatch}, id) {
+            try {
+                const token = store.getters['auth/token']
+                const {data} = await axios.get(`/requests/${id}.json?auth=${token}`)
+
+                return data
+            } catch (e) {
+                dispatch('setMessage', {
+                    value: e.message,
+                    type: 'danger'
+                }, {root: true})
+            }
+        },
+        async remove({dispatch}, id) {
+            try {
+                const token = store.getters['auth/token']
+                await axios.delete(`/requests/${id}.json?auth=${token}`)
+                dispatch('setMessage', {
+                    value: 'Заявка удалена',
+                    type: 'warning'
+                }, {root: true})
+            } catch (e) {
+                dispatch('setMessage', {
+                    value: e.message,
+                    type: 'danger'
+                }, {root: true})
+            }
+        },
+        async update({dispatch}, request) {
+            try {
+                const token = store.getters['auth/token']
+                await axios.put(`/requests/${request.id}.json?auth=${token}`, request)
+
+                dispatch('setMessage', {
+                    value: 'Статус заявки обновлён',
+                    type: 'primary'
+                }, {root: true})
+            } catch (e) {
+                dispatch('setMessage', {
+                    value: e.message,
+                    type: 'danger'
+                }, {root: true})
+            }
         }
     },
     getters: {
